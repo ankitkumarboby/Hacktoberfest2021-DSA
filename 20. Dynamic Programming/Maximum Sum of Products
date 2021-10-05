@@ -1,0 +1,53 @@
+/*
+Link - https://codeforces.com/problemset/problem/1519/D
+Contest - Educational Codeforces Round 108 (Rated for Div. 2)
+rating - 1600
+topic - Dynamic Programming
+*/
+
+
+#include<bits/stdc++.h>
+#define   ll                          long long int
+#define   fo(number1,number2,number3) for(int number1=number2;number1<=number3;++number1)
+using namespace std;
+/***************************code begins here*****************************/
+ 
+class solver{
+	public:
+	void solve(){
+		int n;
+		cin>>n;
+		ll a[n+1],b[n+1];
+		fo(i,1,n)cin>>a[i];
+		fo(i,1,n)cin>>b[i];
+		ll val=0ll;
+		fo(i,1,n)val+=a[i]*b[i];
+		ll ans=val;
+		ll dp[n+1][n+1];
+		fo(len,1,n)fo(i,1,n-len+1){
+			int j=i+len-1;
+			if(len<=2){
+				dp[i][j]=val;
+				fo(t,0,len-1)dp[i][j]+=a[j-t]*b[i+t] - a[i+t]*b[i+t];
+			}
+			else{
+				dp[i][j]=dp[i+1][j-1];
+				dp[i][j]-= a[i]*b[i]+a[j]*b[j];
+				dp[i][j]+=a[j]*b[i]+a[i]*b[j];
+			}
+			ans=max(ans,dp[i][j]);
+		}
+		cout<<ans<<'\n';
+	}           
+};
+ 
+int main(){
+	
+	int test=1;
+	//cin>>test;
+	while(test--){
+		solver o;
+		o.solve();
+	}
+}
+ 
